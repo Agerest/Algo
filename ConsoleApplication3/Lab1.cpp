@@ -10,10 +10,11 @@ int main()
 {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
+
 	char array1[5];
 	char * pointer2;
 	long array3[5];
-	long ** pointer4;
+	long (*pointer4)[3]; //[размер]
 	double array5[3][3][3];
 	double (* pointer6)[3][3];
 
@@ -31,6 +32,7 @@ int main()
 	for (int i = 0; i < 5; i++) {
 		cout << array1[i] << "\t";
 	}
+	cout << endl << *(array1 + 2) << endl;
 
 	cout << endl << "4.	Присвоить указателю №2 адрес массива №1, вывести на экран адреса массива и указателя и содержимое указателя" << endl;
 	pointer2 = array1;
@@ -74,31 +76,26 @@ int main()
 
 	cout << endl << "8.	Удалить динамический массив. Используя указатель №4, создать двумерный динамический массив и повторить для него пункты 2, 3. Сделать выводы. Удалить двумерный динамический массив." << endl;
 	delete[] pointer2;
-	cout << "Введите размер массива (n и m)" << endl;
-	int m = 0;
-	cin >> n;
-	cin >> m;
-	pointer4 = new long*[n];
-	for (int i = 0; i < m; i++)
-	{
-		pointer4[i] = new long[n];
-	}
+	pointer4 = new long[3][3];
 	cout << endl << "Ввести данные в указатель №4" << endl;
-	for (int i = 0; i < m; i++) 
+	for (int i = 0; i < 3; i++) 
 	{
-		for (int j = 0; j < n; j++)
+		for (int j = 0; j < 3; j++)
 		{
 			cout << "Ввод элемента " << "[" << i << "][" << j << "]  " << endl;
 			cin >> pointer4[i][j];
 		}
 	}
 	cout << endl << "Проверить содержимое этого указателя" << endl;
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < n; j++)
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++)
 		{
 			cout << pointer4[i][j] << "\t";
 		}
 		cout << endl;
+	}
+	for (int i = 0; i < 3; i++) {
+		delete[] pointer4[i];
 	}
 	delete[] pointer4;
 
