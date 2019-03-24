@@ -1,4 +1,3 @@
-
 #include "pch.h"
 #include <cstdlib>;
 #include <windows.h>;
@@ -6,7 +5,7 @@
 
 using namespace std;
 
-int main()
+int mains()
 {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
