@@ -13,10 +13,9 @@ struct someStruct {
 	double length;
 };
 
-someStruct initStruct(someStruct &t) {
+void initStruct(someStruct &t) {
 	cout << "Инициализации структуры" << endl;
 	t.secondName = new char[10];
-	return t;
 }
 
 void initSomeArray(someStruct *t) {
