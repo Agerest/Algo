@@ -93,9 +93,9 @@ int mains()
 		}
 		cout << endl;
 	}
-	for (int i = 0; i < 3; i++) {
+	/*for (int i = 0; i < 3; i++) {
 		delete[] pointer4[i];
-	}
+	}*/
 	delete[] pointer4;
 
 	cout << endl << "9.	Вывести на экран любой из элементов трехмерного массива №5, используя операцию индексации" << endl;

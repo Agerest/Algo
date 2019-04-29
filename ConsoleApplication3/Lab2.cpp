@@ -5,7 +5,7 @@
 
 using namespace std;
 
-struct someStruct {
+/*struct someStruct {
 	char firstName[10];
 	char * secondName;
 	unsigned long number;
@@ -58,7 +58,7 @@ void deleteArrays(someStruct *t) {
 	delete[] t->secondName;
 }
 
-int main()
+int main2()
 {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
@@ -91,4 +91,4 @@ int main()
 	}
 
 	return 1;
-}
+}*/
