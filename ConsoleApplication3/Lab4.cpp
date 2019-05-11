@@ -118,24 +118,32 @@ char pop(ArrayStack *s) {
 struct Stack {
 	char data;
 	Stack *next;
+	int size = 0;
 };
 
-void push(Stack *s, char data)
+void push(Stack* &s, char data)
 {
 	Stack *temp = new Stack;
 	temp->data = data;
 	temp->next = s;
+	temp->size++;
 	s = temp;
 }
 
-char pop(Stack *s) {
+char pop(Stack* &s) {
+	if (s == nullptr) {
+		cout << "Стэк пуст" << endl;
+		return '\0';
+	}
 	char result = s->data;
-	Stack head = *s;
-	s = s->next;
-	delete &head;
+	if (s->size == 1) {
+		s = nullptr;
+	}
+	else {
+		s = s->next;
+	}
 	return result;
 }
-
 
 int main()
 {
@@ -144,20 +152,20 @@ int main()
 	SimpleQueue simpleQueue;
 	LoopQueue loopQueue;
 	ArrayStack arrayStack;
-	Stack stack;
+	Stack *stack = nullptr;
 
 	char data;
 
 	int i = 0;
 	do {
 		cout << "1 - push in simple queue" << endl;
-		cout << "2 - pop in simple queue" << endl;
+		cout << "2 - pop from simple queue" << endl;
 		cout << "3 - push in loop queue" << endl;
-		cout << "4 - pop in loop queue" << endl;
+		cout << "4 - pop from loop queue" << endl;
 		cout << "5 - push in array stack" << endl;
-		cout << "6 - pop in array stack" << endl;
+		cout << "6 - pop from array stack" << endl;
 		cout << "7 - push in stack" << endl;
-		cout << "8 - pop in stack" << endl;
+		cout << "8 - pop from stack" << endl;
 		cout << "0 - exit" << endl;
 		cin >> i;
 		switch (i)
@@ -183,7 +191,7 @@ int main()
 		case 7: {
 			cout << "Введите элемент: " << endl;
 			cin >> data;
-			push(&stack, data);
+			push(stack, data);
 			break;
 		}
 		case 2: {
@@ -202,7 +210,7 @@ int main()
 			break;
 		}
 		case 8: {
-			data = pop(&stack);
+			data = pop(stack);
 			cout << "Элемент: " << data << endl;
 			break;
 		}
