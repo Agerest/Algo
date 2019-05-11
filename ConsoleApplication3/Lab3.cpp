@@ -2,18 +2,15 @@
 
 #include "pch.h"
 #include <cstdlib>
-#include <windows.h>
 #include <iostream>
-#include <string>
 #include <sstream>
-#include <vector>
 #include <stdarg.h>
 #include <stdlib.h>
 
 using namespace std;
 
 struct someStruct {
-	char firstName[10];
+	char firstName[3];
 	char * secondName;
 	unsigned long number;
 	long * someArray;
@@ -22,7 +19,7 @@ struct someStruct {
 
 void initStruct(someStruct &t) {
 	cout << "Инициализации структуры" << endl;
-	t.secondName = new char[10];
+	t.secondName = new char[3];
 }
 
 void initSomeArray(someStruct *t) {
@@ -48,52 +45,34 @@ void initName(someStruct *t) {
 
 void writeToTextFile(someStruct &s, FILE *file) {
 	fprintf(file, "%ul\n%s\n%s\n%lf\n", s.number, s.firstName, s.secondName, s.length);
-	for (double i = 0; i < s.length; i += 1.0) {
-		fprintf(file, "%ld; ", s.someArray[(int)i]);
+	for (int i = 0; i < s.length; i ++) {
+		fprintf(file, "%ld; ", s.someArray[i]);
 	}
 }
 
 void writeToBinaryFile(someStruct &s, FILE *file) {
 	fwrite((&s.number), sizeof(s.number), 1, file);
-	fwrite((&s.firstName), sizeof(s.firstName), 1, file);
-	fwrite((&s.secondName), sizeof(s.secondName), 1, file);
+	fwrite((s.firstName), sizeof(s.firstName), 1, file);
+	fwrite((s.secondName), sizeof(s.secondName), 1, file);
 	fwrite((&s.length), sizeof(s.length), 1, file);
-	fwrite((&s.someArray), s.length * sizeof(s.someArray), s.length, file);
+	fwrite((s.someArray), s.length * sizeof(s.someArray), s.length, file);
 }
 
 void readTextFile(someStruct &s, FILE *file) {
 	fscanf(file, "%ul\n%s\n%s\n%lf\n", &s.number, s.firstName, s.secondName, &s.length);
-	cout << "ffffffffffffffffffffffffff:   " << s.length << endl;
 	s.someArray = new long[s.length];
-	for (double i = 0; i < s.length; i += 1.0) {
-		fscanf(file, "%ld; ", &s.someArray[(int)i]);
+	for (int i = 0; i < s.length; i ++) {
+		fscanf(file, "%ld; ", &s.someArray[i]);
 	}
 }
-
-/*void readTextFile(someStruct &s, FILE *file) {
-	fscanf(file, "Number: %d\n", &s.number);
-	fscanf(file, "First name: %s\n", s.firstName);
-	fscanf(file, "Second name: %s\n", s.secondName);
-	fscanf(file, "Length: %f\n", &s.length);
-	s.someArray = new long[s.length];
-	for (int i = 0; i < s.length; i++) {
-		fscanf(file, "%d; ", &s.someArray[i]);
-	}
-}
-
-void writeToTextFile(someStruct &s, FILE *file) {
-	fprintf(file, "Number: %d\nFirst name: %s\nSecond name: %s\nLength: %f\n", s.number, s.firstName, s.secondName, s.length);
-	for (int i = 0; i < s.length; i++) {
-		fprintf(file, "%d; ", s.someArray[i]);
-	}
-}*/
 
 void readBinaryFile(someStruct &s, FILE *file) {
 	fread((&s.number), sizeof(s.number), 1, file);
-	fread((&s.firstName), sizeof(s.firstName), 1, file);
-	fread((&s.secondName), sizeof(s.secondName), 1, file);
+	fread((s.firstName), sizeof(s.firstName), 1, file);
+	fread((s.secondName), sizeof(s.secondName), 1, file);
 	fread((&s.length), sizeof(s.length), 1, file);
-	fread((&s.someArray), s.length * sizeof(s.someArray), s.length, file);
+	s.someArray = new long[s.length];
+	fread((s.someArray), s.length * sizeof(s.someArray), s.length, file);
 }
 
 void outSomeArray(someStruct &t) {
@@ -115,7 +94,7 @@ void deleteArrays(someStruct *t) {
 	delete[] t->secondName;
 }
 
-int main()
+int main3()
 {
 	setlocale(LC_ALL, "rus");
 
@@ -129,6 +108,8 @@ int main()
 		initStruct(writeStruct[i]);
 		initSomeArray(&writeStruct[i]);
 		initName(&writeStruct[i]);
+		initStruct(readBinaryStruct[i]);
+		initStruct(readTextStruct[i]);
 	}
 
 	cout << "Сохранить содержимое элементов массива структур в текстовом и двоичном файлах" << endl;
@@ -151,7 +132,6 @@ int main()
 		char *fileName = new char[100];
 		sprintf(fileName, "text%d", i);
 		file = fopen(fileName, "rt");
-		initStruct(readTextStruct[i]);
 		readTextFile(readTextStruct[i], file);
 		fclose(file);
 		cout << i << " структура была считана из текстового файла" << endl;
@@ -192,6 +172,9 @@ int main()
 		deleteArrays(&readTextStruct[i]);
 		deleteArrays(&readBinaryStruct[i]);
 	}
+	delete[] writeStruct;
+	delete[] readBinaryStruct;
+	delete[] readTextStruct;
 
-	return 1;
+	return 0;
 }
