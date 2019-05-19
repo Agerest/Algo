@@ -9,8 +9,10 @@
 
 using namespace std;
 
+const int name_length = 30;
+
 struct someStruct {
-	char firstName[3];
+	char firstName[name_length];
 	char * secondName;
 	unsigned long number;
 	long * someArray;
@@ -19,7 +21,7 @@ struct someStruct {
 
 void initStruct(someStruct &t) {
 	cout << "Инициализации структуры" << endl;
-	t.secondName = new char[3];
+	t.secondName = new char[name_length];
 }
 
 void initSomeArray(someStruct *t) {
@@ -52,10 +54,13 @@ void writeToTextFile(someStruct &s, FILE *file) {
 
 void writeToBinaryFile(someStruct &s, FILE *file) {
 	fwrite((&s.number), sizeof(s.number), 1, file);
-	fwrite((s.firstName), sizeof(s.firstName), 1, file);
-	fwrite((s.secondName), sizeof(s.secondName), 1, file);
+	fwrite((s.firstName), sizeof(char), name_length, file);
+	fwrite((s.secondName), sizeof(char), name_length, file);
 	fwrite((&s.length), sizeof(s.length), 1, file);
-	fwrite((s.someArray), s.length * sizeof(s.someArray), s.length, file);
+	for (int j = 0; j < s.length;j++)
+	{
+		fwrite(&(s.someArray[j]), sizeof(long), 1, file);
+	}
 }
 
 void readTextFile(someStruct &s, FILE *file) {
@@ -68,11 +73,14 @@ void readTextFile(someStruct &s, FILE *file) {
 
 void readBinaryFile(someStruct &s, FILE *file) {
 	fread((&s.number), sizeof(s.number), 1, file);
-	fread((s.firstName), sizeof(s.firstName), 1, file);
-	fread((s.secondName), sizeof(s.secondName), 1, file);
+	fread((s.firstName), sizeof(char), name_length, file);
+	fread((s.secondName), sizeof(char), name_length, file);
 	fread((&s.length), sizeof(s.length), 1, file);
 	s.someArray = new long[s.length];
-	fread((s.someArray), s.length * sizeof(s.someArray), s.length, file);
+	for (int j = 0; j < s.length; j++)
+	{
+		fread(&(s.someArray[j]), sizeof(long), 1, file);
+	}
 }
 
 void outSomeArray(someStruct &t) {

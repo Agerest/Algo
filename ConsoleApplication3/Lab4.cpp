@@ -145,7 +145,7 @@ char pop(Stack* &s) {
 	return result;
 }
 
-int main()
+int main4()
 {
 	setlocale(LC_ALL, "rus");
 
