@@ -5,7 +5,7 @@
 
 using namespace std;
 
-struct List {
+/*struct List {
 
 	struct Element {
 		char data;
@@ -278,7 +278,7 @@ struct LoopList {
 	}
 };
 
-int main() {
+int main5() {
 
 	setlocale(LC_ALL, "rus");
 
@@ -291,13 +291,13 @@ int main() {
 
 	int i = 0;
 	do {
-		cout << "1 - add in list" << endl;
+		cout << "1 - add to list" << endl;
 		cout << "2 - delete from list" << endl;
 		cout << "3 - get from list" << endl;
-		cout << "4 - add in linked list" << endl;
+		cout << "4 - add to linked list" << endl;
 		cout << "5 - delete from linked list" << endl;
 		cout << "6 - get from linked list" << endl;
-		cout << "7 - add in loop list" << endl;
+		cout << "7 - add to loop list" << endl;
 		cout << "8 - delete from loop list" << endl;
 		cout << "9 - get from loop list" << endl;
 		cout << "0 - exit" << endl;
@@ -349,6 +349,9 @@ int main() {
 		case 3: {
 			cout << "¬ведите индекс: " << endl;
 			cin >> index;
+			if (list.get(index) == nullptr) {
+				break;
+			}
 			data = list.get(index)->data;
 			cout << "Ёлемент: " << data << endl;
 			break;
@@ -356,6 +359,9 @@ int main() {
 		case 6: {
 			cout << "¬ведите индекс: " << endl;
 			cin >> index;
+			if (linkedList.get(index) == nullptr) {
+				break;
+			}
 			data = linkedList.get(index)->data;
 			cout << "Ёлемент: " << data << endl;
 			break;
@@ -363,6 +369,9 @@ int main() {
 		case 9: {
 			cout << "¬ведите индекс: " << endl;
 			cin >> index;
+			if (loopList.get(index) == nullptr) {
+				break;
+			}
 			data = loopList.get(index)->data;
 			cout << "Ёлемент: " << data << endl;
 			break;
@@ -374,4 +383,4 @@ int main() {
 
 
 	return 0;
-}
+}*/

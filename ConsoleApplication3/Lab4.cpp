@@ -126,7 +126,12 @@ void push(Stack* &s, char data)
 	Stack *temp = new Stack;
 	temp->data = data;
 	temp->next = s;
-	temp->size++;
+	if (s == nullptr) {
+		temp->size = 1;
+	}
+	else {
+		temp->size = s->size + 1;
+	}
 	s = temp;
 }
 
@@ -158,13 +163,13 @@ int main4()
 
 	int i = 0;
 	do {
-		cout << "1 - push in simple queue" << endl;
+		cout << "1 - push to simple queue" << endl;
 		cout << "2 - pop from simple queue" << endl;
-		cout << "3 - push in loop queue" << endl;
+		cout << "3 - push to loop queue" << endl;
 		cout << "4 - pop from loop queue" << endl;
-		cout << "5 - push in array stack" << endl;
+		cout << "5 - push to array stack" << endl;
 		cout << "6 - pop from array stack" << endl;
-		cout << "7 - push in stack" << endl;
+		cout << "7 - push to stack" << endl;
 		cout << "8 - pop from stack" << endl;
 		cout << "0 - exit" << endl;
 		cin >> i;
